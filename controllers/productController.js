@@ -10,10 +10,10 @@ export const getProducts = async (req, res) => {
 
         console.log("fetched products", products);
 
-        res.status(200).json({ sucess: true, data: products })
+        res.status(200).json({ success: true, data: products })
     } catch (error) {
         console.log("Error in getProducts function", error);
-        res.status(500).json({ sucess: false, message: "Internal Server Error" })
+        res.status(500).json({ success: false, message: "Internal Server Error" })
 
     }
 }
@@ -23,7 +23,7 @@ export const createProduct = async (req, res) => {
     const { name, price, image } = req.body
 
     if (!name || !price || !image) {
-        return res.status(400).json({ sucess: false, message: "All fields are required" })
+        return res.status(400).json({ success: false, message: "All fields are required" })
     }
     try {
         const newProduct = await sql`
@@ -31,11 +31,11 @@ export const createProduct = async (req, res) => {
         VALUES(${name}, ${price}, ${image})
         RETURNING * 
         `
-        res.status(201).json({ sucess: true, data: newProduct[0] })
+        res.status(201).json({ success: true, data: newProduct[0] })
 
     } catch (error) {
         console.log("Error in createProduct function", error);
-        res.status(500).json({ sucess: false, message: "Internal Server Error" })
+        res.status(500).json({ success: false, message: "Internal Server Error" })
     }
 }
 
@@ -47,10 +47,10 @@ export const getProduct = async (req, res) => {
         const product = await sql`
         SELECT * FROM products WHERE id=${id}
         `
-        res.status(200).json({ sucess: true, data: product[0] })
+        res.status(200).json({ success: true, data: product[0] })
     } catch (error) {
         console.log("Error in getProduct funtion", error);
-        res.status(500).json({ sucess: false, message: "Internal Server Error" })
+        res.status(500).json({ success: false, message: "Internal Server Error" })
     }
 }
 
@@ -69,14 +69,14 @@ export const updateProduct = async (req, res) => {
 
         if (updateProduct.length === 0) {
             return res.status(404).json({ 
-                sucess: false, 
+                success: false, 
                 message: "Product not Found" })
         }
 
-        res.status(200).json({sucess: true, data: updateProduct[0]})
+        res.status(200).json({success: true, data: updateProduct[0]})
     } catch (error) {
         console.log("Error in updateProduct funtion", error);
-        res.status(500).json({ sucess: false, message: "Internal Server Error" });
+        res.status(500).json({ success: false, message: "Internal Server Error" });
     }
 }
 
@@ -92,7 +92,7 @@ export const deleteProduct = async (req, res) => {
 
         if(deletedProduct.length === 0) {
             return res.status(404).json({
-                sucess:false,
+                success:false,
                 message: "Product not found"
             })
         }
